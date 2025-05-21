@@ -21,7 +21,7 @@ install VALUES:
         --hf-token {{HF_TOKEN}} \
         --namespace {{NAMESPACE}} \
         --storage-class shared-vast --storage-size 300Gi \
-        --values-file $PWD/../project/{{VALUES}}
+        --values-file $PWD/../../{{VALUES}}
 
 start VALUES: 
     just install {{VALUES}} && \
@@ -34,7 +34,7 @@ uninstall VALUES:
         --hf-token {{HF_TOKEN}} \
         --namespace {{NAMESPACE}} \
         --storage-class shared-vast  --storage-size 300Gi \
-        --values-file $PWD/../project/{{VALUES}} \
+        --values-file $PWD/../../{{VALUES}}
         --uninstall
 
 # Interactive benchmark commands:
