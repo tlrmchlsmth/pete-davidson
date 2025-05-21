@@ -18,7 +18,6 @@ get-pods:
 [working-directory: 'llm-d-deployer/quickstart']
 install VALUES:
     ./llmd-installer.sh \
-        --hf-token {{HF_TOKEN}} \
         --namespace {{NAMESPACE}} \
         --storage-class shared-vast --storage-size 300Gi \
         --values-file $PWD/../../{{VALUES}}
@@ -34,7 +33,7 @@ uninstall VALUES:
         --hf-token {{HF_TOKEN}} \
         --namespace {{NAMESPACE}} \
         --storage-class shared-vast  --storage-size 300Gi \
-        --values-file $PWD/../../{{VALUES}}
+        --values-file $PWD/../../{{VALUES}} \
         --uninstall
 
 # Interactive benchmark commands:
