@@ -1,0 +1,58 @@
+sampleApplication:
+    baseConfigMapRefName: basic-gpu-preset
+    model:
+        modelArtifactURI: hf://RedHatAI/Llama-4-Maverick-17B-128E-Instruct-FP8
+        modelName: "RedHatAI/Llama-4-Maverick-17B-128E-Instruct-FP8"
+    prefill:
+        replicas: 0
+    decode:
+        replicas: 4
+
+        extraArgs:
+            - "--tensor-parallel-size"
+            - "8"
+            - "--max-model-len"
+            - "250000"
+            - "--distributed-executor-backend"
+            - "mp"
+            - "--disable-log-requests"
+    resources:
+        limits:
+            nvidia.com/gpu: 8
+            rdma/ib: 1
+        requests:
+            cpu: "16"
+            memory: 64Gi
+            nvidia.com/gpu: 8
+            rdma/ib: 1
+redis:
+    enabled: false
+modelservice:
+    metrics:
+        enabled: true
+    epp:
+        defaultEnvVarsOverride:
+            - name: ENABLE_KVCACHE_AWARE_SCORER
+              value: "false"
+            - name: ENABLE_PREFIX_AWARE_SCORER
+              value: "true"
+            - name: PREFIX_AWARE_SCORER_WEIGHT
+              value: "2"
+            - name: ENABLE_LOAD_AWARE_SCORER
+              value: "true"
+            - name: LOAD_AWARE_SCORER_WEIGHT
+              value: "1"
+            - name: ENABLE_SESSION_AWARE_SCORER
+              value: "false"
+            - name: PD_ENABLED
+              value: "false"
+            - name: PD_PROMPT_LEN_THRESHOLD
+              value: "10"
+            - name: PREFILL_ENABLE_KVCACHE_AWARE_SCORER
+              value: "false"
+            - name: PREFILL_ENABLE_LOAD_AWARE_SCORER
+              value: "false"
+            - name: PREFILL_ENABLE_PREFIX_AWARE_SCORER
+              value: "false"
+            - name: PREFILL_ENABLE_SESSION_AWARE_SCORER
+              value: "false"
